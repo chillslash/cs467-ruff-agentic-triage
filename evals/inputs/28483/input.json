@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28483,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28483",
+  "created_at": "2026-09-10T12:33:40Z",
+  "title": "The Ruff VS Code extension uses the wrong `ruff.toml` file",
+  "body": "### Summary\n\nI have a bunch of projects that do not follow the PEP8 formatting rules (longer lines and non-standard indentation). For these I have made custom `ruff.toml` file that is referred to in the respective `pyproject.toml` files like this:\n```\n[tool.ruff]\nextend = \"~/projects/notpep8/ruff.toml\"\n```\n\nThe file structure is like this:\n```\n~/projects --- notpep8 -+- ruff.toml\n                        |\n                        +- proj -+- pyproject.toml\n                        |        |\n                        |        +- src --- example.py\n```\n\nThis works perfectly when running `ruff check` from the command line in the respective project directories. \n\nHowever when running ruff in VS Code using that Astral ruff extension, this seems to be ignored and instead the global PEP8 compliant `ruff.toml` file is used. This of course produces loads of errors.\n\nI have tried several different things:\n\n- Made an intentional error in pyproject.toml. This is detected so ruff does look at the file.\n- Added `\"ruff.configuration\": \"~/projects/notpep8/ruff.toml\"` lines to the various `settings.json` files. That does not change anything.\n\nAs far as I can see from the attached log file ruff does seem to load the local `ruff.toml` file - and then it loads the global one immediately afterwards.\n\n[ruff.log](https://github.com/user-attachments/files/32057870/ruff.log)\n\n### Version\n\nruff 0.16.6 (22f65a2ab 2026-09-03)",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:37:19.006750+00:00"
+}

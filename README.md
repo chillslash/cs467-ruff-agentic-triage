@@ -1,4 +1,4 @@
-# CS467 Assignment 3 â€” Ruff issue-triage agent
+# CS467 Assignment 3 — Ruff issue-triage agent
 
 Independent public **sandbox**, not affiliated with Ruff maintainers.
 Source: https://github.com/astral-sh/ruff. No upstream deployment.
@@ -19,4 +19,3 @@ Run `python -m unittest discover -s tests -v`, then
 
 Do not confuse **compiler success**, **historical script checking**, or
 **an end-to-end workflow success** with decision accuracy. Each is tested separately.
-

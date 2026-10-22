@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28503,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28503",
+  "created_at": "2026-09-10T19:18:49Z",
+  "title": "No fix for `lazy-import-mismatch` (TID254) with multiple imported things in one statement",
+  "body": "### Summary\n\nNo fix is offered for [`lazy-import-mismatch` (TID254)](https://docs.astral.sh/ruff/rules/lazy-import-mismatch/) when a single statement imports multiple things. It would be more helpful for a fix to be offered, splitting the import statement into two if necessary to keep lazy and non-lazy import separate. Example:\n```console\n$ cat >tid254.py <<'# EOF'\nimport os, re\nimport rlcompleter, typing\nfrom sys import stdin, stdout\n# EOF\n\n$ ruff check --preview --target-version py315 --select TID254 tid254.py --config 'lint.flake8-tidy-imports = {ban-lazy = [\"rlcompleter\"], require-lazy = [\"os\", \"re\", \"sys\", \"typing\"]}' --output-format concise\ntid254.py:1:8: lazy-import-mismatch: `os` should be imported lazily\ntid254.py:1:12: lazy-import-mismatch: `re` should be imported lazily\ntid254.py:2:21: lazy-import-mismatch: `typing` should be imported lazily\ntid254.py:3:1: lazy-import-mismatch: `sys` should be imported lazily\n```\n\nA helpful fix would produce:\n```python\nlazy import os, re\nimport rlcompleter\nlazy import typing\nlazy from sys import stdin, stdout\n```\n\n### Version\n\nruff 0.16.7 (b5dba861c 2026-09-10)",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:33.447288+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28618,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28618",
+  "created_at": "2026-09-15T17:43:51Z",
+  "title": "Support ability to opt out of rewriting exceptions to PEP 758 `except A, B` Py 3.14 syntax",
+  "body": "### Summary\n\nPEP 758 / Python 3.14 support `except A, B` syntax for exceptions.\n\nWhat we have found very consistently from real-world experience is that LLMs get tripped up on this, even when we prominently highlight this as a project convention in places like AGENTS.md + CLAUDE.md. AI/LLM code reviews consistently return the false-positive finding that exception syntax in use for the project is \"Python 2 only\" when in reality it is valid Python 3.14 syntax.\n\nStemming from this experience is a feature request: support the ability to tell `ruff` to disable this specific formatter behavior (re-writing `except (A, B)` to `except A, B`) while keeping `target-version = \"py314\"` or above. Currently, there is no way to \"opt out\".\n\nOtherwise, the only workaround currently is to downgrade to `target-version = \"py313\"` in pyproject.toml (plus `from __future__ import annotations` to avoid new false-positive F821s) even when 3.14 is the real target version of our project for support & testing.\n\nRelated (though all opened claiming this reformatting behavior is an error by ruff, which it is not): #23626, #25065, #25901.",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:37.741801+00:00"
+}

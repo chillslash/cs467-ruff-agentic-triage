@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28842,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28842",
+  "created_at": "2026-09-23T18:20:45Z",
+  "title": "Formatter changes the value of implicitly concatenated strings when joining after an octal escape",
+  "body": "### Summary\n\nWhen `ruff format` joins implicitly concatenated string or bytes literals into one literal, an octal escape at the end of one part can absorb leading octal digits of the next part. This changes the runtime value of the literal.\n\n```python\n# octal.py\nx = b\"A\\0\" b\"1\\0\"\ny = \"\\1\" \"2\"\nprint(x, repr(y))\n```\n\n```console\n$ python octal.py\nb'A\\x001\\x00' '\\x012'\n$ ruff format --isolated octal.py\n1 file reformatted\n$ cat octal.py\nx = b\"A\\01\\0\"\ny = \"\\12\"\nprint(x, repr(y))\n$ python octal.py\nb'A\\x01\\x00' '\\n'\n```\n\n`b\"A\\0\" b\"1\\0\"` becomes `b\"A\\01\\0\"`, which is a different value. The same happens with `str` literals: `\"\\1\" \"2\"` becomes `\"\\12\"`, which is `\"\\n\"`.\n\nThe trigger is a part that ends with a one- or two-digit octal escape (`\\0`, `\\1`, `\\12`, …) followed by a part that starts with an octal digit `0`–`7`. CPython resolves the escapes in each part before it concatenates them, so the joined text is parsed differently.\n\nThe linter had the same problem in the ISC001 fix, which #12936 fixed. The formatter's joining of implicitly concatenated strings seems to still have it.\n\nExpected behavior: either leave such parts unjoined, or pad the escape to three digits when joining (`b\"A\\0001\\0\"`, `\"\\0012\"`). Both keep the value.\n\nWe found this while checking that a one-off `ruff format` pass over a codebase changed formatting only. It showed up because we compared the AST before and after the pass.\n\n### Version\n\nruff 0.15.18 (6686f6340 2026-06-18); also reproduced with ruff 0.16.8\n",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:46.132486+00:00"
+}

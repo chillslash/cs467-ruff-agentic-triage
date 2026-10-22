@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28893,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28893",
+  "created_at": "2026-09-25T12:03:29Z",
+  "title": "Emit error for \"unknown rule selectors\" when explicit-preview-rules=true",
+  "body": "After https://github.com/astral-sh/ruff/pull/26113, \"unknown rule selectors\"  emit warning when an invalid rule is select when preview=true.\nWould it make sense to emit errors when explicit-preview-rules=true?\nI want to enable some preview rules, but I like the validation that I'm not selecting rules with typos\n\nthanks",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:48.085428+00:00"
+}

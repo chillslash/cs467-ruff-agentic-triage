@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28942,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28942",
+  "created_at": "2026-09-27T12:26:48Z",
+  "title": "PLC0414 useless-import-alias: detect in *.pyi files - mypy stubgen generates the violation",
+  "body": "### Summary\n\nmypy's stubgen generates import alias violations:\n\n```python\nfrom ldap._types import LDAPEntryDict as LDAPEntryDict\nfrom ldap.cidict import cidict as cidict\nfrom ldap.schema.subentry import SCHEMA_ATTR_MAPPING as SCHEMA_ATTR_MAPPING, SCHEMA_CLASS_MAPPING as SCHEMA_CLASS_MAPPING\nfrom ldap.schema.tokenizer import (\n    LDAPTokenDict as LDAPTokenDict,\n    LDAPTokenDictValue as LDAPTokenDictValue,\n    parse_tokens as parse_tokens,\n    split_tokens as split_tokens,\n)\n```\nruff only detects them in py file, not in pyi files:\n```\n$ cp models.pyi models.py\n$ ruff check --select useless-import-alias models.pyi\nAll checks passed!\n$ ruff check --select useless-import-alias models.py\nmodels.py:1:25: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:2:25: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:3:34: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:3:78: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:5:5: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:6:5: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:7:5: useless-import-alias: [*] Import alias does not rename original package\nmodels.py:8:5: useless-import-alias: [*] Import alias does not rename original package\nFound 8 errors.\n[*] 8 fixable with the `--fix` option.\n```\n\n→ Please add support for .pyi files.\n\n### Version\n\n0.16.9",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:50.749416+00:00"
+}

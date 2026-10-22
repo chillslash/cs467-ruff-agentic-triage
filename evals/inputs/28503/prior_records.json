@@ -1,0 +1,10 @@
+[
+  {
+    "number": 26584,
+    "title": "[`flake8-tidy-imports`] Skip fixes for multi-member imports (`TID254`)",
+    "url": "https://github.com/astral-sh/ruff/pull/26584",
+    "created_at": "2026-07-07T07:54:07Z",
+    "type": "PR",
+    "note": "Only title and date are exposed; current body/comments/labels omitted"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28274,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28274",
+  "created_at": "2026-09-03T12:01:10Z",
+  "title": "regression in analyze regarding stdlib shadowing with PEP420 packages",
+  "body": "### Summary\n\nHi,\n\nI've noticed a regression in `ruff analyze graph`.\n\nIn a PEP-420 namespace package, imports from stdlib are resolved to sibling modules (when these exist).\n\nConcretely here's a MWE:\n\n```toml\n# pyproject.toml\n[tool.ruff]\nsrc = [\"src\"]\nnamespace-packages = [\"src/example\"]\n```\n\n```py\n# src/example/main.py\nfrom typing import Any\n\nx: Any = 1\n```\n\n```py\n# src/example/typing.py\ny = 3\n```\n\nResults:\n\n```\n% uvx ruff@0.14.9 analyze graph\nwarning: `ruff analyze graph` is experimental and may change without warning\n{\n  \"src/example/main.py\": [],\n  \"src/example/typing.py\": []\n}\n% uvx ruff@0.14.10 analyze graph\nwarning: `ruff analyze graph` is experimental and may change without warning\n{\n  \"src/example/main.py\": [\n    \"src/example/typing.py\"\n  ],\n  \"src/example/typing.py\": []\n}\n```\n\n(same behavior in 0.14.10 and 0.16.5)\n\nThis might be related to #21817, which makes sense given that adding an empty `__init__.pyi` fixes it.\n\nWhat do you think?\nThanks!\n\n### Version\n\n0.16.5",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:37:14.564310+00:00"
+}

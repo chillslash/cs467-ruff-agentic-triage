@@ -1,0 +1,6 @@
+{
+  "repository": "astral-sh/ruff",
+  "policy_commit": "da9e283158c52d1906e6b925e82cbfc10ebade52",
+  "cutoff": "2026-08-31T23:59:59Z",
+  "source": "GitHub API"
+}

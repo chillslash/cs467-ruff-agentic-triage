@@ -1,0 +1,9 @@
+{
+  "source_repository": "synthetic adversarial",
+  "source_number": null,
+  "source_url": null,
+  "created_at": "2026-09-25T00:00:00Z",
+  "title": "Formatter changes bytes after octal escape",
+  "body": "ruff format --isolated octal.py joins two adjacent bytes literals so octal escapes swallow the next digit. Expected unchanged literal values; observed changed output. Test on Ruff 0.16.8 with Python 3.12. Here is a minimal test: x = b'A\\\\0' b'1\\\\0'; print(x).",
+  "snapshot_basis": "Synthetic, no upstream assertion"
+}

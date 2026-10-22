@@ -1,0 +1,10 @@
+[
+  {
+    "number": 26113,
+    "title": "Emit a warning instead of an error for unknown rule selectors",
+    "url": "https://github.com/astral-sh/ruff/pull/26113",
+    "created_at": "2026-06-17T19:03:13Z",
+    "type": "PR",
+    "note": "Only title and date are exposed; current body/comments/labels omitted"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "source_repository": "astral-sh/ruff",
+  "source_number": 28777,
+  "source_url": "https://github.com/astral-sh/ruff/issues/28777",
+  "created_at": "2026-09-22T10:46:11Z",
+  "title": "`too-many-positional-arguments`: dataclasses?",
+  "body": "### Summary\n\n[`too-many-positional-arguments` (PLR0917)](https://docs.astral.sh/ruff/rules/too-many-positional-arguments/)\n\n```py\nfrom dataclasses import dataclass\n\n@dataclass\nclass Thing:\n    foo: float\n    bar: float\n    baz: float\n    width: float\n    height: float\n    is_fizz: bool\n    is_buzz: bool\n    is_fizzbuzz: bool\n```\nThis implicilty creates an `__init__` with 8 positional arguments, so a caller is allowed to do `Thing(1, 2, 3, 4, 5, True, True, True)` which doesn't look very clear. However, `too-many-positional-arguments` does not catch this.\n\nI'm not sure how to best detect this, since there's more than just built-in `dataclasses`. (hardcode `dataclasses`, `msgspec`, `pydantic`?) (if we had type information, we could check if a \"dataclass transform\" is used)",
+  "snapshot_basis": "Issue body unchanged according to GraphQL lastEditedAt; comments and labels intentionally excluded",
+  "collected_at": "2026-10-22T13:38:44.501498+00:00"
+}
