@@ -17,7 +17,7 @@
   68 issues and rule-versus-bug-versus-design variety support a richer measurable evaluation. Rejected a
   rule-only labeler: mostly deterministic, and would overstate AI's benefit.
 ## Operating design and enforced boundaries
-- `.github/workflows/ruff-triage.md` triggers on new **sandbox** issues and supports manual dispatch;
+- `.github/workflows/ruff-triage.md` triggers on owner-authorised **sandbox** `[EVAL]` issues and supports manual dispatch;
   `ruff-triage.lock.yml` is generated with `gh aw compile`.
 - `AGENTS.md` contains repository facts, commands, conventions and forbidden changes.
   `.claude/skills/ruff-issue-triage/SKILL.md` contains six ordered decisions; `scripts/triage_checks.py`
@@ -35,7 +35,8 @@
   target and title restrictions are enforced by compiled safe outputs.
 - **Network:** `network.allowed: [defaults]`, no web tools or extra MCP servers; external hosts blocked
   where engine firewall supports this, except framework/GitHub infrastructure.
-- **Rationale for no-action:** complete reports should receive zero comments. A wrong duplicate link or
+- **Rationale for no-action:** explicit `on.status-comment: false` prevents implicit
+  status comments. Complete reports should receive zero agent comments. A wrong duplicate link or
   unnecessary clarification consumes attention; measure both, not only how often the agent speaks.
 ## Historical evaluation
 - `evals/inputs/`: 17 real September issue bodies and minimal earlier context. Original bodies verified
@@ -81,7 +82,8 @@
 2. **Provider model changes and golden case fails?** Model alias is not immutable. Rerun on any model/config
    change and monthly; compare decisions, comments and recorded model ID; owner blocks rollout and restores last
    approved commit after mismatch.
-3. **300 issues in one week?** Trigger requests can exceed budget: per-run timeout/credit limits and 24h shared
+3. **300 issues in one week?** Ordinary public issues fail the role/title gate before inference;
+   for 300 permitted `[EVAL]` cases, trigger requests can exceed budget: per-run timeout/credit limits and 24h shared
    cap eventually reject runs; no queue guarantee. Excess reports receive **manual** triage; do not promise 300
    automated replies.
 4. **Malicious tool/MCP result?** Freeze local candidate metadata, no external MCP and narrow outputs. Injection
