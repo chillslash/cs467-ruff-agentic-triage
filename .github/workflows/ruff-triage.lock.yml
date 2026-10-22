@@ -1844,8 +1844,8 @@ jobs:
           bash "${RUNNER_TEMP}/gh-aw/actions/conclude_threat_detection.sh" /tmp/gh-aw/threat-detection/detection_result.json
 
   pre_activation:
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]')
     name: pre_activation
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]')
     runs-on: ubuntu-slim
     # Permissions for the pre_activation job (workflow permissions default to none).
     permissions:
@@ -1871,6 +1871,7 @@ jobs:
           GH_AW_INFO_VERSION: "1.0.96"
           GH_AW_INFO_AWF_VERSION: "v0.28.57"
           GH_AW_INFO_ENGINE_ID: "copilot"
+          GH_AW_SETUP_AW_CONTEXT: ${{ inputs.aw_context }}
       - name: Check team membership for workflow
         id: check_membership
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
@@ -1885,7 +1886,6 @@ jobs:
             setupGlobals(core, github, context, exec, io, getOctokit);
             const { main } = require(path.join(actionsDir, 'check_membership.cjs'));
             await main();
-          GH_AW_SETUP_AW_CONTEXT: ${{ inputs.aw_context }}
       - name: Check user rate limit
         id: check_rate_limit
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
