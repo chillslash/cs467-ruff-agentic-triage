@@ -14,7 +14,7 @@ tools:
   bash: true
   edit: false
   github:
-    toolsets: [issues, repos]
+    toolsets: [issues]
   cli-proxy: false
 network:
   allowed: [defaults]
