@@ -21,3 +21,14 @@ Do not confuse **compiler success**, **historical script checking**, or
 **an end-to-end workflow success** with decision accuracy. Each is tested separately.
 
 **Execution status (22 Oct 2026):** The compiled workflow started but Copilot activation failed for missing credential. A documented, non-blind GPT-6-assisted dry run is published at [evals/results](evals/results/); it is not evidence of a real agent run. See [DESIGN.md](DESIGN.md) for the controls still untested.
+
+## Repository branches
+- `main`: runnable sandbox workflow with frozen input snapshots and scripts.
+  It deliberately excludes the gold labels and reports from the default checkout.
+- `submission`: assignment-complete record, including
+  [golden expectations](https://github.com/chillslash/cs467-ruff-agentic-triage/tree/submission/evals/golden),
+  [actual dry-run outputs](https://github.com/chillslash/cs467-ruff-agentic-triage/tree/submission/evals/results),
+  all configuration and the compiled workflow. **Submit a link to a specific
+  `submission` commit**, not the moving default branch.
+
+The dry-run results are expressly **not** successful end-to-end agent runs.

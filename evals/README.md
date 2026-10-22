@@ -15,7 +15,8 @@ representative subset rather than cloning the full Rust monorepo.
 ## Separation of expectations and actual execution
 Expected classifications are written **before** runs and held locally outside
 the pushed evaluation inputs until after execution, to prevent label leakage.
-After runs, the frozen expected outcomes and agent transcripts are published.
+The public `submission` branch contains frozen expected outcomes and dry-run records, while the runnable `main` branch excludes `evals/golden/` and `evals/results/` to reduce accidental answer leakage. An earlier commit on `main` did contain them; Git history remains retrievable and this branch split is **not** a cryptographic barrier. For definitive blinding, use a separate runner repository with no access to the submission branch.
+After runs, the frozen expected outcomes and assistant dry-run records are published.
 Adversarial cases are explicitly synthetic and marked as such.
 
 ## Reproduce collection and deterministic checks
@@ -36,3 +37,18 @@ unnecessary intervention, duplicate precision and security failures.
 A green GitHub Actions status alone never means the decision was correct.
 
 See `evals/results/` for execution limitations and case-by-case discrepancies.
+
+## Conservative heuristic comparison (not held-out)
+Run `python scripts/baseline_eval.py` on the submission branch to reproduce
+a posthoc deterministic decision-rule comparator. The comparator was designed
+after inspecting the selected cases, so it is illustrative, not independent
+experimental evidence. It makes no model API calls.
+
+## Portable evidence checking
+`python scripts/verify_commitments.py` verifies the pre-run SHA-256 commitments
+and normalises Windows CRLF to LF before hashing. It reports a skip when run
+on the gold-free runtime branch. `python scripts/validate_evals.py` compares
+the published actual and expected classes on the submission branch.
+To generate an independent blinded assistant prompt for an individual case
+(without its expected outcome), run:
+`python scripts/export_dryrun_prompt.py --case 28483 --output prompt.md`.

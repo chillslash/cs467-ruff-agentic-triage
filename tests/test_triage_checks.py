@@ -36,6 +36,26 @@ class Checks(unittest.TestCase):
         a=inspect_case("1234",self.root)
         self.assertEqual(a["prior_candidates"],[])
         self.assertFalse(a["rubric_cues"]["mentions_ruff_command"])
+    def test_pre_event_index_filters_future_records(self):
+        ref=self.root/"reference"
+        ref.mkdir()
+        index={"records":[{"number":111,"title":"B009 regression and ruff check",
+                "created_at":"2026-09-01T00:00:00Z","type":"issue","url":"https://example.test/111"},
+                {"number":112,"title":"B009 same rule later",
+                "created_at":"2026-10-01T00:00:00Z","type":"issue","url":"https://example.test/112"}]}
+        (ref/"pre_event_index_2026_05_08.json").write_text(json.dumps(index),encoding="utf-8")
+        with self.assertRaises(ValueError):inspect_case("1234",self.root)
+
+    def test_index_relevance_preserves_prior_metadata(self):
+        ref=self.root/"reference"
+        ref.mkdir()
+        index={"records":[{"number":88,"title":"B009 fix regression",
+            "created_at":"2026-01-01T00:00:00Z","type":"pr","url":"https://example.test/88"}]}
+        (ref/"pre_event_index_2026_05_08.json").write_text(json.dumps(index),encoding="utf-8")
+        result=inspect_case("1234",self.root)
+        self.assertTrue(any(item["number"]==88 for item in result["prior_candidates"]))
+        self.assertIn("B009",result["prior_candidates"][0]["shared_rule_ids"])
+
     def test_path_traversal_rejected(self):
         with self.assertRaises(ValueError): inspect_case("../../secrets",self.root)
 if __name__=="__main__":unittest.main()

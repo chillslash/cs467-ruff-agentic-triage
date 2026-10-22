@@ -4,7 +4,7 @@
 This is a **teaching/evaluation sandbox**, not a fork used for upstream submissions.
 Source project: https://github.com/astral-sh/ruff.
 `reference/` holds a representative snapshot of issue-reporting rules.
-`evals/inputs/` contains real pre-decision issue bodies and time-filtered related context.
+`evals/inputs/` contains pre-decision issue bodies; `reference/pre_event_index_2026_05_08.json` contains pre-event candidate titles.
 `evals/golden/` holds private-to-evaluation ground truth *only after* tests.
 `scripts/` contains deterministic checks and replay/evaluation tools.
 `.github/workflows/ruff-triage.md` is source; `ruff-triage.lock.yml` is compiled.

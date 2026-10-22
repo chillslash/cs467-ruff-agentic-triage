@@ -46,6 +46,7 @@
 - For each case measure exact action agreement, useful clarification quality, related-source accuracy,
   needless comments, false negatives, and any forbidden effects. `evals/README.md` documents replay and
   original URLs; `evals/results/` records actual results/failures separately.
+- Conventional title/field heuristic baseline: **8/19** action classes, **5** unnecessary intervention intents, versus a non-blind GPT-6-assisted **16/19** and **2**. This posthoc comparison is illustrative, not a controlled model study.
 - Human label history is *diagnostic*, not automatic ground truth. Judgements can be contestable; report
   disagreements rather than retrospectively changing expected outcomes.
 ## Governance (implemented vs proposed)

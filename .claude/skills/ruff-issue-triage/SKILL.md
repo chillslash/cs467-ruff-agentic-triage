@@ -12,7 +12,7 @@ Use for sandbox issue reports only. Open this file before evaluating any issue.
    dated after that timestamp.
 2. **Run deterministic checks:** `python scripts/triage_checks.py --case ID`.
    It validates expected fields, version and reproduction cues, and searches
-   only the frozen `prior_records.json` list (never searches the live tracker).
+   the frozen `prior_records.json` and bounded pre-event title index (never searches the live tracker).
    The script is advisory: a version can be optional and valid reports may
    legitimately lack a minimal reproduction.
 3. **Understand the report:** determine whether it pertains to Ruff (linter,
