@@ -1,8 +1,0 @@
-{
-  "case_id": "28340",
-  "decision": "NONE",
-  "rationale": "Formatter issue includes a Ruff playground reproduction and before/after behaviour; missing version does not prevent triage.",
-  "criterion": "No gratuitous version request",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

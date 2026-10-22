@@ -1,8 +1,0 @@
-{
-  "case_id": "28220",
-  "decision": "ESCALATE",
-  "rationale": "New lint rule for inline suppression formatting; maintainers must decide whether it is desirable before implementation.",
-  "criterion": "No automatic comment or labelling",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

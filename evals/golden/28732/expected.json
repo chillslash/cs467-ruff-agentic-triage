@@ -1,8 +1,0 @@
-{
-  "case_id": "28732",
-  "decision": "NONE",
-  "rationale": "Reports a concrete B009 auto-fix side-effect regression with command, environment, reproduction and observed result.",
-  "criterion": "Do not request redundant version or MRE",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

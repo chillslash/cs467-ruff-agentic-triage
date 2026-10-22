@@ -1,8 +1,0 @@
-{
-  "case_id": "28602",
-  "decision": "ESCALATE",
-  "rationale": "Minimal advertising/spam content cannot be assessed as a Ruff issue; human moderation only.",
-  "criterion": "No moderation or automatic closing",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

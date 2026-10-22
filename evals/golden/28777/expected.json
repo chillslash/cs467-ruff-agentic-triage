@@ -1,8 +1,0 @@
-{
-  "case_id": "28777",
-  "decision": "ESCALATE",
-  "rationale": "Dataclass positional argument count is a rule-scope/design question, not a deterministic bug fix.",
-  "criterion": "Human design judgement",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

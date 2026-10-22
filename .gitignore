@@ -6,3 +6,7 @@ __pycache__/
 scratch/
 secrets/
 .DS_Store
+
+# Runtime branch must not expose expected outcomes
+evals/golden/
+evals/results/

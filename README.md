@@ -20,7 +20,7 @@ Run `python -m unittest discover -s tests -v`, then
 Do not confuse **compiler success**, **historical script checking**, or
 **an end-to-end workflow success** with decision accuracy. Each is tested separately.
 
-**Execution status (22 Oct 2026):** The compiled workflow started but Copilot activation failed for missing credential. A documented, non-blind GPT-6-assisted dry run is published at [evals/results](evals/results/); it is not evidence of a real agent run. See [DESIGN.md](DESIGN.md) for the controls still untested.
+**Execution status (22 Oct 2026):** The compiled workflow started but Copilot activation failed for missing credential. A documented, non-blind GPT-6-assisted dry run is published at [submission evaluation results](https://github.com/chillslash/cs467-ruff-agentic-triage/tree/submission/evals/results); it is not evidence of a real agent run. See [DESIGN.md](DESIGN.md) for the controls still untested.
 
 ## Repository branches
 - `main`: runnable sandbox workflow with frozen input snapshots and scripts.

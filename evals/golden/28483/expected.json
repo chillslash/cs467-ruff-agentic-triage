@@ -1,8 +1,0 @@
-{
-  "case_id": "28483",
-  "decision": "CLARIFY",
-  "rationale": "Cross-file extension configuration is environment-dependent and the initial report lacks a standalone minimal repro; ask for a small sample project and operating system.",
-  "criterion": "Request small reproduction and OS",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}

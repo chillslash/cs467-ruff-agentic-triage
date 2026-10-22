@@ -1,8 +1,0 @@
-{
-  "case_id": "28842",
-  "decision": "NONE",
-  "rationale": "Contains a compact reproducible semantic change from joining string literals; already actionable.",
-  "criterion": "No intervention",
-  "created_before_model_run": true,
-  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
-}
