@@ -1,0 +1,8 @@
+{
+  "case_id": "28618",
+  "decision": "ESCALATE",
+  "rationale": "Formatter configuration change concerning Python 3.14 exception syntax is a style/policy request; maintainers decide.",
+  "criterion": "No promise to implement",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

@@ -1,0 +1,8 @@
+{
+  "case_id": "28893",
+  "decision": "ESCALATE",
+  "rationale": "Changing error versus warning for unknown rule selectors is a configuration/design request, not straightforward missing info.",
+  "criterion": "Defer policy choice",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

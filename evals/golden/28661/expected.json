@@ -1,0 +1,8 @@
+{
+  "case_id": "28661",
+  "decision": "ESCALATE",
+  "rationale": "Proposal for enforcing attribute docstring styles is a new rule request requiring project consensus.",
+  "criterion": "Do not label implementation-ready",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

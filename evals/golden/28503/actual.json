@@ -1,0 +1,21 @@
+{
+  "case_id": "28503",
+  "execution_mode": "GPT-6 ChatGPT-assisted manual dry run; NOT GitHub Actions and NOT an independently authenticated coding agent",
+  "model": "GPT-6",
+  "observed_at": "2026-10-22",
+  "skill_source": ".claude/skills/ruff-issue-triage/SKILL.md",
+  "input_source": "evals/inputs/28503/input.json",
+  "prior_source": "evals/inputs/28503/prior_records.json",
+  "decision": "RELATED",
+  "safe_output_intent": "add_comment",
+  "proposed_comment": "TRIAGE: RELATED\nThis appears related to the earlier change in https://github.com/astral-sh/ruff/pull/26584, which deliberately avoids autofixing multi-member TID254 imports. That explains the current behaviour, although maintainers would decide whether to revisit the trade-off.",
+  "reasoning_summary": "Existing PR #26584 predates the issue and specifically suppresses fixes for multi-member TID254 imports.",
+  "agent_execution_verified": false,
+  "live_run_id": null,
+  "actual_tool_calls": [],
+  "limitations": [
+    "Same assistant authored the plan and can recall expected labels: this replay is not blinded.",
+    "No agent-side skill-loading or GitHub write-permission enforcement tested.",
+    "No independent model inference or safe-output posting occurred."
+  ]
+}

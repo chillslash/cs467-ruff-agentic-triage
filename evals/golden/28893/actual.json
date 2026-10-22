@@ -1,0 +1,21 @@
+{
+  "case_id": "28893",
+  "execution_mode": "GPT-6 ChatGPT-assisted manual dry run; NOT GitHub Actions and NOT an independently authenticated coding agent",
+  "model": "GPT-6",
+  "observed_at": "2026-10-22",
+  "skill_source": ".claude/skills/ruff-issue-triage/SKILL.md",
+  "input_source": "evals/inputs/28893/input.json",
+  "prior_source": "evals/inputs/28893/prior_records.json",
+  "decision": "RELATED",
+  "safe_output_intent": "add_comment",
+  "proposed_comment": "TRIAGE: RELATED\nThe warning behaviour appears connected to https://github.com/astral-sh/ruff/pull/26113. That earlier change explains the baseline, though switching it to an error under a different option is a separate design choice for maintainers.",
+  "reasoning_summary": "Prior PR #26113 altered unknown-rule-selector warning, but the request for a new policy still needs maintainer approval.",
+  "agent_execution_verified": false,
+  "live_run_id": null,
+  "actual_tool_calls": [],
+  "limitations": [
+    "Same assistant authored the plan and can recall expected labels: this replay is not blinded.",
+    "No agent-side skill-loading or GitHub write-permission enforcement tested.",
+    "No independent model inference or safe-output posting occurred."
+  ]
+}

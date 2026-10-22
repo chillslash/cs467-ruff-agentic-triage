@@ -1,0 +1,8 @@
+{
+  "case_id": "28274",
+  "decision": "NONE",
+  "rationale": "Detailed namespace-package reproducer and unexpected stdlib shadowing reported; no additional factual question is necessary.",
+  "criterion": "No unnecessary clarification",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

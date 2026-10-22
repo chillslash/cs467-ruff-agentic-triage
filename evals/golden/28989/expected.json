@@ -1,0 +1,8 @@
+{
+  "case_id": "28989",
+  "decision": "NONE",
+  "rationale": "Specific SLF001 false-positive report with code, command and expected behaviour; sufficient for first pass.",
+  "criterion": "No redundant question",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

@@ -1,0 +1,8 @@
+{
+  "case_id": "28493",
+  "decision": "ESCALATE",
+  "rationale": "Fix safety criteria and type checking interactions are policy decisions; no autonomous promise or request to change behaviour.",
+  "criterion": "Defer fix-safety policy",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

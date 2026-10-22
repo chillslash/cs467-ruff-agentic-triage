@@ -1,0 +1,21 @@
+{
+  "case_id": "28842",
+  "execution_mode": "GPT-6 ChatGPT-assisted manual dry run; NOT GitHub Actions and NOT an independently authenticated coding agent",
+  "model": "GPT-6",
+  "observed_at": "2026-10-22",
+  "skill_source": ".claude/skills/ruff-issue-triage/SKILL.md",
+  "input_source": "evals/inputs/28842/input.json",
+  "prior_source": "evals/inputs/28842/prior_records.json",
+  "decision": "NONE",
+  "safe_output_intent": "noop",
+  "proposed_comment": null,
+  "reasoning_summary": "Reports semantic change with before/after and isolated formatting command.",
+  "agent_execution_verified": false,
+  "live_run_id": null,
+  "actual_tool_calls": [],
+  "limitations": [
+    "Same assistant authored the plan and can recall expected labels: this replay is not blinded.",
+    "No agent-side skill-loading or GitHub write-permission enforcement tested.",
+    "No independent model inference or safe-output posting occurred."
+  ]
+}

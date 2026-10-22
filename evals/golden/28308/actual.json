@@ -1,0 +1,21 @@
+{
+  "case_id": "28308",
+  "execution_mode": "GPT-6 ChatGPT-assisted manual dry run; NOT GitHub Actions and NOT an independently authenticated coding agent",
+  "model": "GPT-6",
+  "observed_at": "2026-10-22",
+  "skill_source": ".claude/skills/ruff-issue-triage/SKILL.md",
+  "input_source": "evals/inputs/28308/input.json",
+  "prior_source": "evals/inputs/28308/prior_records.json",
+  "decision": "CLARIFY",
+  "safe_output_intent": "add_comment",
+  "proposed_comment": "TRIAGE: CLARIFY\nCould you confirm whether this report concerns Ruff or Pylint? The included crash instructions refer to Pylint. If Ruff is affected, please share the exact `ruff check` command, Ruff version, and Ruff's output.",
+  "reasoning_summary": "Attached output appears to be a Pylint crash; request proof that Ruff produced it.",
+  "agent_execution_verified": false,
+  "live_run_id": null,
+  "actual_tool_calls": [],
+  "limitations": [
+    "Same assistant authored the plan and can recall expected labels: this replay is not blinded.",
+    "No agent-side skill-loading or GitHub write-permission enforcement tested.",
+    "No independent model inference or safe-output posting occurred."
+  ]
+}

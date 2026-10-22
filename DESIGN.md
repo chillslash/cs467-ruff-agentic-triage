@@ -85,6 +85,10 @@
   log, safe-output job, GitHub Actions metadata and `evals/` artefacts.
 - **Evaluation/responsibility:** 17 historical and 2 synthetic cases; account owner is evaluator,
   maintainer and kill-switch operator.
+## Recorded evaluation outcome
+- Actions run 39791356243 stopped before inference: personal-repo Copilot engine secret missing; do not mistake it for a tested agent.
+- Explicit GPT-6-assisted *non-blind* dry run of 17 real + 2 adversarial cases: 16/19 action-class agreement, 2 unnecessary comment intents; see `evals/results/`. Runtime skill loading, posting controls and billing remain untested.
+- `evaluation-integrity.yml` verifies golden SHA-256 commitments, unit tests and case comparisons independently of the model.
 ## Unresolved
 - End-to-end model authentication and actual skill-use evidence must be demonstrated or explicitly marked
   untested, with the assignment-permitted assistant dry run as fallback. Do not claim inferred execution.

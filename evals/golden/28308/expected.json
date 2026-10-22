@@ -1,0 +1,8 @@
+{
+  "case_id": "28308",
+  "decision": "CLARIFY",
+  "rationale": "The attached crash text refers to Pylint, despite the Ruff issue title. Ask whether Ruff is actually involved and request the exact Ruff command/output.",
+  "criterion": "Request only tool identity and Ruff command/output",
+  "created_before_model_run": true,
+  "evidence_basis": "Independent assessment of issue body and frozen prior references, without using future labels as ground truth"
+}

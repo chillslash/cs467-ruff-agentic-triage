@@ -14,12 +14,13 @@ def validate():
             for item in prior:
                 if item["created_at"]>=x["created_at"]:
                     problems.append(f"{case.name}: future prior item")
-            exp=case/"expected.json"
+            gold=ROOT/"evals"/"golden"/case.name
+            exp=gold/"expected.json"
             if exp.exists():
                 e=json.loads(exp.read_text(encoding="utf-8"))
                 if e["decision"] not in LABELS: problems.append(f"{case.name}: bad decision")
                 if not e.get("rationale"): problems.append(f"{case.name}: missing rationale")
-                actual=case/"actual.json"
+                actual=gold/"actual.json"
                 if actual.exists():
                     a=json.loads(actual.read_text(encoding="utf-8"))
                     predicted=a.get("decision","NO_RUN")
