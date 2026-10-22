@@ -24,6 +24,9 @@ class WorkflowSecurity(unittest.TestCase):
         self.assertIn("issues: read",s)
         self.assertIn("contents: read",s)
         self.assertIn("engine: copilot",s)
+        self.assertIn("roles: [admin, maintainer, write]",s)
+        self.assertIn("status-comment: false",s)
+        self.assertIn("startsWith(github.event.issue.title, '[EVAL]')",s)
     def test_skill_is_referenced(self):
         s=SOURCE.read_text(encoding="utf-8")
         self.assertIn(".claude/skills/ruff-issue-triage/SKILL.md",s)
