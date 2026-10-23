@@ -2,9 +2,9 @@
 
 The 17 real Ruff issue inputs and two synthetic attacks are frozen in `evals/inputs`. Expectations were hashed **before** the first run; `scripts/verify_commitments.py` checks all published expected JSON files against those prior commitments. The agent was never given expected answers in the test-time checkout.
 
-## Actual execution record
+## Initial execution record (before Copilot credentials were configured)
 
-GitHub Actions **did not perform AI inference**. Run [39791356243](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39791356243) reached activation and failed because the sandbox personal account lacked `COPILOT_GITHUB_TOKEN`. Earlier push validation run [39790532150](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39790532150) had no agent jobs. No output comments or labels were posted by an agent.
+At that earlier stage, GitHub Actions **did not perform AI inference**. Run [39791356243](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39791356243) reached activation and failed because the sandbox personal account lacked `COPILOT_GITHUB_TOKEN`. Earlier push validation run [39790532150](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39790532150) had no agent jobs. No output comments or labels were posted by an agent.
 
 With end-to-end inference unavailable, the coding assistant performed a documented **manual/assistant-guided dry run** following the workflow's reasoning instructions and frozen case inputs. The assistant had authored the expected outcomes earlier in the same conversation. Consequently the replay is **not blind** and the action-class agreement must not be used as an independent performance estimate. No instrumented model/tool transcript exists; the markdown files are authored decision records, not GitHub API or MCP logs.
 
@@ -29,3 +29,7 @@ Set a narrow-scope `COPILOT_GITHUB_TOKEN` as an Actions secret or use an eligibl
 The submission branch's [GitHub Actions run 39886823906](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39886823906) completed successfully after the initial corpus and compiled workflow were published. It runs Python compilation, local unit tests, the SHA-256 golden-answer verifier, and the per-case comparison script. Later workflow alignment and test refinements are checked by the corresponding local tests; these are not model-inference evidence.
 
 The runnable `main` branch deliberately omits `evals/golden` and `evals/results`. Since earlier commits exposed golden files, Git history still makes them retrievable; a completely blind evaluation would need a separate runner repository.
+
+## Update after genuine GitHub Actions model runs
+
+On 23 October 2026 the inference credential and automatic model selection were configured, and 10 distinct historical cases subsequently ran through Copilot with scoped safe outputs. The **later live evidence supersedes the dry-run-only status for the project**, but not the provenance of the earlier dry run. See [live_runs.json](live_runs.json), [live_report.md](live_report.md) and [engineering_failures.md](engineering_failures.md). Never combine the dry-run 16/19 with live 3/10 into one accuracy figure.
