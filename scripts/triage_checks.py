@@ -1,6 +1,6 @@
 """Deterministic parsing/search over pre-decision snapshots; never a classifier."""
 from pathlib import Path
-import argparse, json, re, math
+import argparse, json, re, math, os, urllib.request
 ROOT=Path(__file__).resolve().parents[1]
 RULE=re.compile(r"\b(?:[A-Z]{1,5}\d{3,4}|RUF\d{3}|PLR\d{4})\b")
 COMMAND=re.compile(r"(?im)^\s*(?:\$\s*)?(?:uvx\s+)?ruff\s+(?:check|format|analyze|version)\b")
@@ -53,8 +53,56 @@ def inspect_case(case, base=ROOT):
           "links":len(re.findall(r"https?://",text))},
         "prior_candidates":unique[:12],
         "caveat":"Field cues are not decisions; assess applicability and sufficiency yourself."}
+
+# Sandbox issue #N and historical Ruff issue #ID are distinct.
+TRIGGER = re.compile(r"^\[EVAL\] #(?P<source>\d{4,7}|adv-[a-z-]+): (?P<title>.+)$")
+SANDBOX = "chillslash/cs467-ruff-agentic-triage"
+
+def inspect_trigger(issue_number, base=ROOT, issue_payload=None):
+    number = int(issue_number)
+    if not (1 <= number <= 9999999):
+        raise ValueError("Invalid sandbox issue number")
+    if issue_payload is None:
+        event_path = os.environ.get("GITHUB_EVENT_PATH")
+        if event_path and Path(event_path).is_file():
+            event = json.loads(Path(event_path).read_text(encoding="utf-8"))
+            if event.get("repository", {}).get("full_name") != SANDBOX:
+                raise ValueError("Unexpected triggering repository")
+            issue_payload = event.get("issue")
+        if issue_payload is None:
+            request = urllib.request.Request(
+                f"https://api.github.com/repos/{SANDBOX}/issues/{number}",
+                headers={"Accept": "application/vnd.github+json", "User-Agent": "CS467-Ruff-evaluation"})
+            with urllib.request.urlopen(request, timeout=12) as response:
+                issue_payload = json.load(response)
+    if not isinstance(issue_payload, dict) or issue_payload.get("number") != number:
+        raise ValueError("Trigger issue number mismatch")
+    match = TRIGGER.fullmatch(issue_payload.get("title") or "")
+    if not match:
+        raise ValueError("Invalid or missing [EVAL] source ID")
+    source_id = match.group("source")
+    path = base / "evals" / "inputs" / source_id / "input.json"
+    if not path.is_file():
+        raise ValueError("Unknown frozen source ID")
+    source = json.loads(path.read_text(encoding="utf-8"))
+    if match.group("title") != source["title"]:
+        raise ValueError("Source title does not match frozen historical fixture")
+    expected = (f"Historical or synthetic sandbox evaluation case {source_id}; "
+                f"SOURCE: {source.get('source_url') or 'synthetic'}\n\n"
+                f"{source.get('body') or ''}")
+    normalise = lambda value: (value or "").replace("\r\n", "\n").strip()
+    if normalise(issue_payload.get("body")) != normalise(expected):
+        raise ValueError("Trigger body does not match frozen historical fixture")
+    result = inspect_case(source_id, base)
+    result["sandbox_issue_number"] = number
+    result["binding_validated"] = True
+    return result
+
 if __name__=="__main__":
     parser=argparse.ArgumentParser()
-    parser.add_argument("--case",required=True)
+    target=parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("--case",help="Offline fixture check only")
+    target.add_argument("--issue-number",type=int,help="Resolve triggering sandbox issue to verified historical source")
     args=parser.parse_args()
-    print(json.dumps(inspect_case(args.case),indent=2,ensure_ascii=False))
+    result=inspect_trigger(args.issue_number) if args.issue_number else inspect_case(args.case)
+    print(json.dumps(result,indent=2,ensure_ascii=True))
