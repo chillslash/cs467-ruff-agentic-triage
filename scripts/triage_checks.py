@@ -58,16 +58,20 @@ def inspect_case(case, base=ROOT):
 TRIGGER = re.compile(r"^\[EVAL\] #(?P<source>\d{4,7}|adv-[a-z-]+): (?P<title>.+)$")
 SANDBOX = "chillslash/cs467-ruff-agentic-triage"
 
-def inspect_trigger(issue_number, base=ROOT, issue_payload=None):
+def inspect_trigger(issue_number, base=ROOT, issue_payload=None, event_file=None):
     number = int(issue_number)
     if not (1 <= number <= 9999999):
         raise ValueError("Invalid sandbox issue number")
     if issue_payload is None:
-        event_path = os.environ.get("GITHUB_EVENT_PATH")
-        if event_path and Path(event_path).is_file():
+        event_path = event_file or os.environ.get("GITHUB_EVENT_PATH")
+        if event_path:
+            if not Path(event_path).is_file():
+                raise ValueError("GitHub event file is missing")
             event = json.loads(Path(event_path).read_text(encoding="utf-8"))
             if event.get("repository", {}).get("full_name") != SANDBOX:
                 raise ValueError("Unexpected triggering repository")
+            if event.get("action") != "opened":
+                raise ValueError("Not an opened-issue event")
             issue_payload = event.get("issue")
         if issue_payload is None:
             request = urllib.request.Request(
@@ -103,6 +107,7 @@ if __name__=="__main__":
     target=parser.add_mutually_exclusive_group(required=True)
     target.add_argument("--case",help="Offline fixture check only")
     target.add_argument("--issue-number",type=int,help="Resolve triggering sandbox issue to verified historical source")
+    parser.add_argument("--event-file",help="Read the trusted event payload from the Actions runner before AI execution")
     args=parser.parse_args()
-    result=inspect_trigger(args.issue_number) if args.issue_number else inspect_case(args.case)
+    result=inspect_trigger(args.issue_number,event_file=args.event_file) if args.issue_number else inspect_case(args.case)
     print(json.dumps(result,indent=2,ensure_ascii=True))
