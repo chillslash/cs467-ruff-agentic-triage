@@ -39,6 +39,8 @@ class TriggerBindingTests(unittest.TestCase):
         self.assertTrue(result["binding_validated"])
         self.assertEqual(result["sandbox_issue_number"], 3)
         self.assertEqual(result["source_id"], "28308")
+        self.assertEqual(result["verified_issue"]["body"], self.record["body"])
+        self.assertEqual(result["verified_issue"]["title"], self.record["title"])
         self.assertTrue(result["rubric_cues"]["mentions_pylint"])
 
     def test_wrong_github_number_rejected(self):
