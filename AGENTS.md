@@ -28,10 +28,11 @@ command, version, configuration and OS details. Missing fields alone do not just
 a comment when the issue is already reproducible. Distinguish formatter, rule,
 CLI, extension, and upstream-tool problems. Design changes need maintainer consensus.
 Only search records created at or before the evaluated event time.
-On a live issue-triggered run, first validate sandbox issue number against the
-frozen source title/body using `--issue-number`. Do not treat a sandbox issue
-number as a Ruff issue ID. If validation fails, abstain (`noop`); never choose
-a different case. Candidate similarity is not proof of the same mechanism.
+On live issue events, the trusted pre-agent step validates the trigger and
+writes `evals/runtime-binding.json` before model inference. The model MUST
+read this file and use its validated source ID. Do not treat a sandbox issue
+number as a Ruff issue ID, fetch the event inside the sandbox, or choose a
+different case. If validation fails, abstain; candidate similarity is not proof.
 
 ## Forbidden changes and trust boundary
 Never close/delete issues, modify labels, merge PRs, force-push, post upstream,
