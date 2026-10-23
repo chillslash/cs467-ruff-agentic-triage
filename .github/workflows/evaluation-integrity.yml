@@ -19,3 +19,5 @@ jobs:
         run: python3 scripts/verify_commitments.py
       - name: Evaluation schema and comparison
         run: python3 scripts/validate_evals.py
+      - name: Live evaluation audit
+        run: python3 scripts/evaluate_live.py
