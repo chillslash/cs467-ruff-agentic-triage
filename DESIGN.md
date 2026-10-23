@@ -20,16 +20,19 @@
 - `.github/workflows/ruff-triage.md` triggers on owner-authorised **sandbox** `[EVAL]` issues and supports manual dispatch;
   `ruff-triage.lock.yml` is generated with `gh aw compile`.
 - `AGENTS.md` contains repository facts, commands, conventions and forbidden changes.
-  `.claude/skills/ruff-issue-triage/SKILL.md` contains six ordered decisions; `scripts/triage_checks.py`
-  extracts fields and ranks time-filtered local predecessors.
-- The agent must *open and use* the skill, checked via runner transcript and `SKILL_USED` marker, not
-  inferred from the file existing. `CONTRIBUTING.md` forbids unattended upstream AI contributions.
+  `.claude/skills/ruff-issue-triage/SKILL.md` defines the four dispositions; a trusted pre-agent
+  Python check binds each sandbox issue to a frozen historical source, embeds its unedited body and
+  ranks pre-cutoff predecessor titles without relying on the model to fetch live GitHub data.
+- The agent is instructed to open the Claude-format skill; traces contain `SKILL_USED` self-reports,
+  but not an unambiguous independent skill-file read for every case. Treat this as a verification gap.
+  `CONTRIBUTING.md` forbids unattended upstream AI contributions.
 - **Untrusted input:** issue title/body, code/log snippets, frozen prior-record metadata, and GitHub tool
   or MCP responses. The issue may impersonate a maintainer; all are data, never instruction.
-- **Agent actions:** read sandbox checkout/GitHub metadata, run local parsing script, request `noop` or
-  one safe-output comment. No write token during reasoning; comment is processed by separate scoped job.
-- **Enforced restrictions:** one comment maximum, triggering `[EVAL]` issue only, <=2 links, 8-minute
-  timeout, 12 turns; no closure, deletion, label change, PR, merge, force-push or cross-repository
+- **Agent actions:** a trusted Actions step checks the issue event and writes `runtime-binding.json`;
+  model reads the embedded original issue plus time-filtered metadata, then requests `noop` or a
+  bounded comment. No write token during reasoning; a separate scoped handler posts comments.
+- **Enforced restrictions:** one comment maximum, triggering `[EVAL]` issue only, <=2 links, 6-minute
+  timeout, 9 turns; no closure, deletion, label change, PR, merge, force-push or cross-repository
   writes. The workflow has `contents: read` and `issues: read` for model execution.
 - Comment **600-character brevity is advisory**, not an enforced platform length cap; count, link,
   target and title restrictions are enforced by compiled safe outputs.
@@ -56,24 +59,25 @@
 - Human label history is *diagnostic*, not automatic ground truth. Judgements can be contestable; report
   disagreements rather than retrospectively changing expected outcomes.
 ## Governance (implemented vs proposed)
-- **Identity:** GitHub Actions bot/safe-output actor; record actual posting identity in logs if a live
-  run succeeds.
+- **Identity:** actual sandbox comments were posted by `github-actions[bot]` via the safe-output handler;
+  no comment or issue was posted upstream.
 - **Least privilege:** Agent workflow `permissions: contents: read, issues: read`; no cross-repo write
   tool. Inspect compiled agent and safe-output jobs.
 - **Safe outputs:** `add-comment.max: 1`, `max-links: 2`, target triggering issue, `[EVAL]` title gate.
-  `noop` for abstention; tested structurally in unit tests and through *non-live* adversarial
-  assistant dry runs. Runtime enforcement and actual bot identity remain untested.
+  `noop` for abstention; verified via compiled tests and 10 live issues. Two erroneous comments were
+  posted within the cap. Prompt-injection cases remain **assistant dry runs only**.
 - **Human approval:** No agent edits/PRs. Human maintainer reviews comments before any real upstream
   action; upstream contributions forbidden. No CODEOWNERS needed for single-owner sandbox.
-- **Budgets:** 8 min, 12 turns, 200 credits/run, 3000 credits/day; workflow_dispatch user cap 10/hour.
+- **Budgets:** 6 min, 9 turns, 12 AI Credits/run, 80/day; workflow_dispatch user cap 10/hour.
   Daily cap is **not** a strict issue-arrival cap.
-- **Audit:** GitHub Actions run ID, steps, timestamps, engine/model version and safe outputs where
-  exposed; fixed inputs, expected and actual case logs, Git commit. Actual usage/cost may be unavailable.
-- **Kill switch:** Owner opens Actions > Ruff triage > `...` > Disable workflow on phone, then cancels
-  running jobs from each run's page. Disabling alone does not cancel in-flight jobs.
-- **Drift:** Owner reruns 17+2 golden tasks before configuration/model change and at least monthly;
-  personally reviews **all** changes, especially wrongful comments/noops and adversarial cases. Not
-  scheduled automatically.
+- **Audit:** GitHub Actions run IDs, model selector `copilot/auto`, posted comments and per-run AIC,
+  fixed input/golden checksums and actual classes in `evals/results/live_runs.json`; provider model
+  sub-version and monetary billing were not independently available.
+- **Kill switch:** Owner disables Ruff triage under Actions and cancels active runs separately.
+  The switch was exercised: GitHub confirmed `disabled_manually` after the sample.
+- **Drift:** Owner should rerun a small preselected golden subset before any model/config change,
+  review all comments against source evidence, and use live adversarial checks before real deployment.
+  Not scheduled automatically, to avoid wasted credits.
 - **Accountability:** GitHub account owner controls workflows, secrets and disable action; owner reviews
   outputs, reports errors, and approves changes. Model provides advice, never authority.
 ## Required five questions
@@ -103,21 +107,25 @@
 - **Evaluation/responsibility:** 17 historical and 2 synthetic cases; account owner is evaluator,
   maintainer and kill-switch operator.
 ## Recorded evaluation outcome
-- Actions run 39791356243 stopped before inference: personal-repo Copilot engine secret missing; do not mistake
-  it for a tested agent.
-- Explicit GPT-6-assisted *non-blind* dry run of 17 real + 2 adversarial cases: 16/19 action-class agreement, 2
-  unnecessary comment intents; see `evals/results/`. Runtime skill loading, posting controls and billing remain
-  untested.
+- Initial run 39791356243 failed before inference (missing Copilot secret). After authentication,
+  model routing and event-binding corrections, 10 real issue-triggered workflows completed.
+- **Live accuracy:** 3/10 exact class, 7/10 comment-versus-silence; 2 comments, both substantively
+  problematic; 6.339795 AI Credits in primary runs. Posthoc deterministic baseline: **7/10** on this
+  subset (not a held-out comparison). See `evals/results/live_report.md` and `live_runs.json`.
+- GPT-6-assisted **non-blind** dry run: 16/19 classes on 17 real + 2 synthetic cases; not equivalent
+  to live agent evaluation. Two adversarial cases have not been tested against live Copilot.
+- Runs spanned an initial and a revised workflow rubric, so the aggregate is **not a single-version
+  estimate**. All failures and the extra #28503 retest remain recorded, without replacing gold.
 - `evaluation-integrity.yml` verifies unit tests and the compiled restrictions; on `submission`
   it verifies all 19 golden SHA-256 commitments, and on gold-free `main` the hash check skips.
 ## Unresolved
-- End-to-end model authentication and actual skill-use evidence must be demonstrated or explicitly marked
-  untested, with the assignment-permitted assistant dry run as fallback. Do not claim inferred execution.
+- Live inference and scoped sandbox safe-output execution are verified. Skill marker is visible but
+  independent evidence that the agent opened/followed the Claude-format skill is incomplete.
 - Frozen prior records are intentionally sparse; broad duplicate recall may be low. Manual model
   interpretation can still err, and budget credits may not equal money.
 ## AI-use statement
 - Human selected Ruff and authorised sandbox publication; GPT-6 generated the implementation,
   most instructions, expected classifications and dry-run records. Do not imply user-authored code.
-- Verification performed: authenticated GitHub snapshots, source-date checks, unit tests, lock
-  compilation, GitHub-hosted integrity runs, and published per-case comparisons. Human review and
-  actual model-run skill evidence remain outstanding before a strong final submission claim.
+- Verification performed: authenticated GitHub snapshots, 21 unit tests, lock compilation, CI,
+  historical source binding, real Copilot logs, observed comments and per-run credit accounting.
+  Human adjudication and stronger agent-skill provenance remain outstanding.
