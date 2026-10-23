@@ -1,7 +1,7 @@
 name: Evaluation integrity
 on:
   push:
-    branches: [main]
+    branches: [main, submission]
   workflow_dispatch:
 permissions:
   contents: read
