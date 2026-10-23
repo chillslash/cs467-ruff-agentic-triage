@@ -7,13 +7,14 @@ description: Evaluate Ruff issue readiness using time-frozen records and narrowl
 
 Use for sandbox issue reports only. Open this file before evaluating any issue.
 
-1. **Bind sandbox to source ID:** Sandbox issue #N is not Ruff source #ID.
-   First run `python scripts/triage_checks.py --issue-number N` where N is
-   the sandbox trigger number. Read the verified `source_id` from its output;
-   if binding fails, issue `noop` and stop. Never guess or switch fixture
-   IDs, then establish the source `created_at` cutoff.
-2. **Use deterministic output from step 1:** it validates the event's
-   full title/body, version and reproduction cues, and searches
+1. **Use prevalidated binding:** Before model inference, a trusted
+   GitHub Actions step invokes `triage_checks.py --issue-number N --event-file`
+   and writes `evals/runtime-binding.json`. Open it FIRST. Verify
+   `binding_validated: true`; use only its `source_id` and creation cutoff.
+   Sandbox #N is not Ruff #ID. If the file is missing, abstain using `noop`.
+   Never guess a source or fetch the issue inside the model container.
+2. **Use deterministic output from the pre-agent step:** it validates the
+   source title/body, version and reproduction cues, and searches
    the frozen `prior_records.json` and bounded pre-event title index (never searches the live tracker).
    The script is advisory: a version can be optional and valid reports may
    legitimately lack a minimal reproduction.
