@@ -13,7 +13,8 @@ Source project: https://github.com/astral-sh/ruff.
 ## Build / test / check
 Python 3.10+ and stdlib only. From repository root:
 - `python -m unittest discover -s tests -v`
-- `python scripts/triage_checks.py --case 28483`
+- `python scripts/triage_checks.py --case 28483` (offline fixture only)
+- `python scripts/triage_checks.py --issue-number 3` (validate a live sandbox issue)
 - `python scripts/validate_evals.py`
 - `gh aw compile ruff-triage`
 The upstream Ruff codebase is Rust; its development guide uses
@@ -27,6 +28,10 @@ command, version, configuration and OS details. Missing fields alone do not just
 a comment when the issue is already reproducible. Distinguish formatter, rule,
 CLI, extension, and upstream-tool problems. Design changes need maintainer consensus.
 Only search records created at or before the evaluated event time.
+On a live issue-triggered run, first validate sandbox issue number against the
+frozen source title/body using `--issue-number`. Do not treat a sandbox issue
+number as a Ruff issue ID. If validation fails, abstain (`noop`); never choose
+a different case. Candidate similarity is not proof of the same mechanism.
 
 ## Forbidden changes and trust boundary
 Never close/delete issues, modify labels, merge PRs, force-push, post upstream,
