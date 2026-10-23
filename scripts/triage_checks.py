@@ -100,6 +100,13 @@ def inspect_trigger(issue_number, base=ROOT, issue_payload=None, event_file=None
     result = inspect_case(source_id, base)
     result["sandbox_issue_number"] = number
     result["binding_validated"] = True
+    # A single verified report means the model need not guess fixture paths.
+    # Only the original source body is exposed, never post-event outcomes.
+    result["verified_issue"] = {
+        "source_id": source_id, "title": source["title"],
+        "body": source.get("body") or "", "source_url": source.get("source_url"),
+        "created_at": source["created_at"],
+    }
     return result
 
 if __name__=="__main__":
