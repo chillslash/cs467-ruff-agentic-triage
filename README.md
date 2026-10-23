@@ -20,7 +20,9 @@ Run `python -m unittest discover -s tests -v`, then
 Do not confuse **compiler success**, **historical script checking**, or
 **an end-to-end workflow success** with decision accuracy. Each is tested separately.
 
-**Execution status (22 Oct 2026):** The compiled workflow started but Copilot activation failed for missing credential. A documented, non-blind GPT-6-assisted dry run is published at [evals/results](evals/results/); it is not evidence of a real agent run. See [DESIGN.md](DESIGN.md) for the controls still untested.
+**Evaluation status (23 October 2026):** Ten genuine historical Ruff issues were processed by real GitHub Agentic Workflow/Copilot runs: **3/10 exact disposition agreement** and **7/10 correct comment-versus-no-comment choice** under the frozen rubric. Two sandbox comments were substantively problematic. The primary sample used **6.339795 AI Credits**. See the [live evaluation report](evals/results/live_report.md) and [case/run manifest](evals/results/live_runs.json). Earlier assistant-guided dry runs are **not** live inference.
+
+The model inference workflow is **disabled after evaluation** to avoid unplanned credit usage. The submission includes the compiled source, full historical and synthetic fixture set, adversarial assistant dry runs, and measured runtime failures. The live historical cases span an initial and a revised workflow version, so the aggregate is diagnostic rather than a held-out single-version performance claim.
 
 ## Repository branches
 - `main`: runnable sandbox workflow with frozen input snapshots and scripts.
