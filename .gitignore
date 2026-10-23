@@ -6,3 +6,10 @@ __pycache__/
 scratch/
 secrets/
 .DS_Store
+
+# Runtime branch must not expose expected outcomes
+evals/golden/
+evals/results/
+
+# Generated per-run from GitHub issue event; never commit
+evals/runtime-binding.json

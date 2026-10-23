@@ -56,6 +56,15 @@ class Checks(unittest.TestCase):
         self.assertTrue(any(item["number"]==88 for item in result["prior_candidates"]))
         self.assertIn("B009",result["prior_candidates"][0]["shared_rule_ids"])
 
+    def test_curated_predecessor_distinguished_from_search_ranking(self):
+        prior=[{"number":26584, "title":"TID254 deliberate multi-member import decision",
+                "created_at":"2026-09-01T00:00:00Z", "type":"PR",
+                "url":"https://github.com/astral-sh/ruff/pull/26584"}]
+        (self.dir/"prior_records.json").write_text(json.dumps(prior),encoding="utf-8")
+        a=inspect_case("1234",self.root)
+        self.assertEqual(a["curated_prior_records"][0]["number"],26584)
+        self.assertIn("title-only",a["candidate_ranking_warning"])
+
     def test_path_traversal_rejected(self):
         with self.assertRaises(ValueError): inspect_case("../../secrets",self.root)
 if __name__=="__main__":unittest.main()
