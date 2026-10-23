@@ -16,6 +16,7 @@ def inspect_case(case, base=ROOT):
     src=base/"evals"/"inputs"/identifier
     x=json.loads((src/"input.json").read_text(encoding="utf-8"))
     priors=json.loads((src/"prior_records.json").read_text(encoding="utf-8"))
+    curated_priors=list(priors)
     text=x["title"]+"\n"+(x.get("body") or "")
     cutoff=x["created_at"]
     # An intentionally bounded, pre-event title-only search index.
@@ -45,6 +46,8 @@ def inspect_case(case, base=ROOT):
     return {"source_id":identifier,"source_time":cutoff,
         "prior_index_limitations":"Title-only May-Aug 2026 index and curated earlier PRs; may miss duplicates. Results are suggestions, not decisions.",
         "indexed_candidates_total":len(unique),
+        "curated_prior_records":curated_priors,
+        "candidate_ranking_warning":"Curated earlier records are stronger context; title-only similarity scores are not evidence of the same behaviour.",
         "rubric_cues":{"rule_ids":sorted(set(RULE.findall(text))),
           "mentions_version":bool(VERSION.search(text)),
           "mentions_ruff_command":bool(COMMAND.search(text)),
