@@ -13,8 +13,8 @@ Use for sandbox issue reports only. Open this file before evaluating any issue.
    `binding_validated: true`; use only its `source_id` and creation cutoff.
    Sandbox #N is not Ruff #ID. If the file is missing, abstain using `noop`.
    Never guess a source or fetch the issue inside the model container.
-2. **Use deterministic output from the pre-agent step:** it validates the
-   source title/body, version and reproduction cues, and searches
+2. **Use only deterministic output from the pre-agent step:** it validates
+   the source title/body, version and reproduction cues, and searches
    the frozen `prior_records.json` and bounded pre-event title index (never searches the live tracker).
    The script is advisory: a version can be optional and valid reports may
    legitimately lack a minimal reproduction.
