@@ -60,6 +60,33 @@ class TriggerBindingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "title does not match"):
             inspect_trigger(3, self.root, issue_payload=tampered)
 
+    def test_event_file_binding_uses_local_runner_payload(self):
+        event = {"action": "opened",
+                 "repository": {"full_name": "chillslash/cs467-ruff-agentic-triage"},
+                 "issue": self.issue}
+        file = self.root / "event.json"
+        file.write_text(json.dumps(event), encoding="utf-8")
+        result = inspect_trigger(3, self.root, event_file=str(file))
+        self.assertEqual(result["source_id"], "28308")
+
+    def test_wrong_event_repository_refused(self):
+        event = {"action": "opened",
+                 "repository": {"full_name": "some-other/repository"},
+                 "issue": self.issue}
+        file = self.root / "event.json"
+        file.write_text(json.dumps(event), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "repository"):
+            inspect_trigger(3, self.root, event_file=str(file))
+
+    def test_non_opened_issue_event_refused(self):
+        event = {"action": "edited",
+                 "repository": {"full_name": "chillslash/cs467-ruff-agentic-triage"},
+                 "issue": self.issue}
+        file = self.root / "event.json"
+        file.write_text(json.dumps(event), encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "opened-issue"):
+            inspect_trigger(3, self.root, event_file=str(file))
+
     def test_source_id_is_not_sandbox_id(self):
         with self.assertRaises(ValueError):
             inspect_trigger(28308, self.root, issue_payload=self.issue)
