@@ -26,6 +26,8 @@ class WorkflowSecurity(unittest.TestCase):
         self.assertIn("engine: copilot",s)
         self.assertIn("roles: [admin, maintainer, write]",s)
         self.assertIn("status-comment: false",s)
+        self.assertIn("pre-agent-steps:",s)
+        self.assertIn('--event-file "$GITHUB_EVENT_PATH"',s)
         self.assertIn("startsWith(github.event.issue.title, '[EVAL]')",s)
     def test_skill_is_referenced(self):
         s=SOURCE.read_text(encoding="utf-8")
