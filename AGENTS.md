@@ -30,7 +30,9 @@ CLI, extension, and upstream-tool problems. Design changes need maintainer conse
 Only search records created at or before the evaluated event time.
 On live issue events, the trusted pre-agent step validates the trigger and
 writes `evals/runtime-binding.json` before model inference. The model MUST
-read this file and use its validated source ID. Do not treat a sandbox issue
+read its embedded `verified_issue` title/body and use only its validated
+source ID. Never enumerate or guess paths under `evals/inputs/`.
+Do not treat a sandbox issue
 number as a Ruff issue ID, fetch the event inside the sandbox, or choose a
 different case. If validation fails, abstain; candidate similarity is not proof.
 
