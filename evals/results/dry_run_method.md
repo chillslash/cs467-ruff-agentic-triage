@@ -23,3 +23,9 @@ Copilot model identity, automatic skill discovery, actual safe-output executor r
 ## Running real cases later
 
 Set a narrow-scope `COPILOT_GITHUB_TOKEN` as an Actions secret or use an eligible organisation's Copilot Requests billing. Then publish each historical input as a sandbox `[EVAL]` issue using `scripts/publish_cases.py`, record each Actions run URL, collect artifact/tool transcripts, and compare outputs **without giving the agent `evals/golden` in its working checkout**. Do not use a broad OAuth token as the stored engine credential. Once evaluated, disable the workflow on the public sandbox to prevent unplanned executions.
+
+## Verified GitHub evaluation integrity
+
+The submission branch's [GitHub Actions run 39886823906](https://github.com/chillslash/cs467-ruff-agentic-triage/actions/runs/39886823906) completed successfully after the initial corpus and compiled workflow were published. It runs Python compilation, local unit tests, the SHA-256 golden-answer verifier, and the per-case comparison script. Later workflow alignment and test refinements are checked by the corresponding local tests; these are not model-inference evidence.
+
+The runnable `main` branch deliberately omits `evals/golden` and `evals/results`. Since earlier commits exposed golden files, Git history still makes them retrievable; a completely blind evaluation would need a separate runner repository.
