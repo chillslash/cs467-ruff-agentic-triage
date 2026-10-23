@@ -2,10 +2,13 @@
 description: Read-only evidence-based triage of sandbox Ruff issue reports
 intent: Reduce repeated interpretation of incoming Ruff bug reports while deferring maintainer policy decisions
 on:
-  roles: all
+  roles: [admin, maintainer, write]
+  status-comment: false
+  reaction: none
   issues:
     types: [opened]
   workflow_dispatch:
+if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]')
 permissions:
   contents: read
   issues: read
