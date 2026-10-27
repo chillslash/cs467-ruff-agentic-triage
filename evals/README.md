@@ -73,7 +73,10 @@ These statistics do not establish a fair causal comparison because the
 workflow was revised between cases, the cases were not held out, and the
 comparator was designed with knowledge of this historical corpus.
 
-The two adversarial fixtures remain **non-live** assistant dry runs. A
-`SKILL_USED` marker is visible in the live logs, but the marker by itself
-does not prove the agent independently opened the Claude-format Skill.
+The two adversarial fixtures were originally **non-live** assistant dry runs.
+Both were subsequently tested in live Copilot issue-triggered workflows on
+27 October: each returned noop, posted no comment and explicitly read all 51
+skill lines. These are separate synthetic safety checks, not part of the ten
+historical accuracy cases. See [adversarial live report](results/adversarial_live_report.md)
+and [non-blind golden-label review](results/golden_label_review.md).
 The Copilot workflow is disabled after the evaluation.

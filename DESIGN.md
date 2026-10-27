@@ -23,8 +23,9 @@
   `.claude/skills/ruff-issue-triage/SKILL.md` defines the four dispositions; a trusted pre-agent
   Python check binds each sandbox issue to a frozen historical source, embeds its unedited body and
   ranks pre-cutoff predecessor titles without relying on the model to fetch live GitHub data.
-- The agent is instructed to open the Claude-format skill; traces contain `SKILL_USED` self-reports,
-  but not an unambiguous independent skill-file read for every case. Treat this as a verification gap.
+- The updated instruction demands an observable skill-file read before classification.
+  Both 27 October synthetic live runs independently log reading all 51 lines of the
+  Claude-format skill. This does not prove compliance in all historical runs.
   `CONTRIBUTING.md` forbids unattended upstream AI contributions.
 - **Untrusted input:** issue title/body, code/log snippets, frozen prior-record metadata, and GitHub tool
   or MCP responses. The issue may impersonate a maintainer; all are data, never instruction.
@@ -61,11 +62,16 @@
 ## Governance (implemented vs proposed)
 - **Identity:** actual sandbox comments were posted by `github-actions[bot]` via the safe-output handler;
   no comment or issue was posted upstream.
-- **Least privilege:** Agent workflow `permissions: contents: read, issues: read`; no cross-repo write
-  tool. Inspect compiled agent and safe-output jobs.
-- **Safe outputs:** `add-comment.max: 1`, `max-links: 2`, target triggering issue, `[EVAL]` title gate.
-  `noop` for abstention; verified via compiled tests and 10 live issues. Two erroneous comments were
-  posted within the cap. Prompt-injection cases remain **assistant dry runs only**.
+- **Least privilege:** Agent job has contents:read and issues:read only; no
+  cross-repository write tools. Compiled activation/safe-output/conclusion jobs
+  have issues:write, and safe-output/conclusion also have pull-requests:write
+  from the framework despite no PR safe-output being enabled. This broader
+  job-level token remains a residual risk; the compiler's generated lockfile
+  should not be hand-edited.
+- **Safe outputs:** add-comment max 1, max-links 2, triggering sandbox issue
+  with [EVAL] title. noop handles abstention. Two inappropriate comments in
+  ten historical runs remained within the cap. Both separate live synthetic
+  injections yielded noop and zero comments on 27 October.
 - **Human approval:** No agent edits/PRs. Human maintainer reviews comments before any real upstream
   action; upstream contributions forbidden. No CODEOWNERS needed for single-owner sandbox.
 - **Budgets:** 6 min, 9 turns, 12 AI Credits/run, 80/day; workflow_dispatch user cap 10/hour.
@@ -112,20 +118,26 @@
 - **Live accuracy:** 3/10 exact class, 7/10 comment-versus-silence; 2 comments, both substantively
   problematic; 6.339795 AI Credits in primary runs. Posthoc deterministic baseline: **7/10** on this
   subset (not a held-out comparison). See `evals/results/live_report.md` and `live_runs.json`.
-- GPT-6-assisted **non-blind** dry run: 16/19 classes on 17 real + 2 synthetic cases; not equivalent
-  to live agent evaluation. Two adversarial cases have not been tested against live Copilot.
+- GPT-6-assisted **non-blind** dry run: 16/19 classes on 17 real + 2 synthetic
+  fixtures, not equivalent to live evaluation. Both synthetic cases were then
+  run live on 27 October: 2/2 safe no-action outputs, 1.178925 AI Credits
+  total, excluded from the ten real-case accuracy denominator.
 - Runs spanned an initial and a revised workflow rubric, so the aggregate is **not a single-version
   estimate**. All failures and the extra #28503 retest remain recorded, without replacing gold.
 - `evaluation-integrity.yml` verifies unit tests and the compiled restrictions; on `submission`
   it verifies all 19 golden SHA-256 commitments, and on gold-free `main` the hash check skips.
 ## Unresolved
-- Live inference and scoped sandbox safe-output execution are verified. Skill marker is visible but
-  independent evidence that the agent opened/followed the Claude-format skill is incomplete.
+- Live inference and sandbox safe-output execution are verified. Two
+  fresh traces independently show the complete skill read, although earlier
+  historical skill reads and universal instruction compliance remain unproven.
+- AI-assisted second-pass review retained gold, marking #28483 contestable.
+  Independent **human** adjudication is still outstanding.
 - Frozen prior records are intentionally sparse; broad duplicate recall may be low. Manual model
   interpretation can still err, and budget credits may not equal money.
 ## AI-use statement
 - Human selected Ruff and authorised sandbox publication; GPT-6 generated the implementation,
   most instructions, expected classifications and dry-run records. Do not imply user-authored code.
-- Verification performed: authenticated GitHub snapshots, 21 unit tests, lock compilation, CI,
+- Verification performed: authenticated GitHub snapshots, 22 unit tests, lock compilation, CI,
   historical source binding, real Copilot logs, observed comments and per-run credit accounting.
-  Human adjudication and stronger agent-skill provenance remain outstanding.
+  Independent human adjudication remains outstanding; two subsequent live
+  synthetic attacks and explicit skill-file reads are separately recorded.

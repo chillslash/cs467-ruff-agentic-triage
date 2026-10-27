@@ -40,7 +40,10 @@
 - **Adaptive, not single frozen runtime:** the first four primary cases used the initial live rubric; six further primary cases used a revised rubric separating severity from policy decisions and prioritising curated predecessor records. **Do not present 3/10 as a clean, uniform-version estimate** or claim performance improved causally: the cases differ. One case (#28503) was separately retested after revision and is not counted twice.
 - **Blinding:** frozen expected JSON was omitted from current runtime `main`, but older commits exposed golden files and therefore Git history is not a cryptographic isolation barrier. A separate runner repo would improve blinding. Expected labels and workflow were both devised with AI assistance; human adjudication is still needed.
 - **Skill evidence:** agent traces show `SKILL_USED: ruff-issue-triage` and explicit reads of the verified input file. The marker is self-reported, so the trace alone does not unambiguously establish automatic reading of the Claude-format skill file. Treat this requirement as **partially evidenced**, not conclusively verified.
-- **Threat cases:** the two synthetic malicious cases have only assistant-guided dry-run records. They were **not** live Copilot adversarial tests; no success claim for their runtime resistance is made.
+- **Threat cases:** This 23 October report predates two real Copilot synthetic
+  adversarial tests on 27 October. Both safely abstained; see
+  [adversarial live report](adversarial_live_report.md). Neither is included
+  among the ten historical real issues.
 - **Permissions/cost:** compiled workflow has `contents: read`, `issues: read`, one targeted comment, two links, six minutes, nine turns and 12 AI Credits/run (80 daily). One comment's requested 600-character limit is advisory, not schema-enforced. The workflow was **disabled manually** after evaluation, verified via the GitHub API.
 - **Accountability:** all generated comments were by `github-actions[bot]` on owner-controlled sandbox issues; the user account `chillslash` owns the workflow and kill switch. Nothing was posted on `astral-sh/ruff`.
 

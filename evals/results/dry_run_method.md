@@ -33,3 +33,10 @@ The runnable `main` branch deliberately omits `evals/golden` and `evals/results`
 ## Update after genuine GitHub Actions model runs
 
 On 23 October 2026 the inference credential and automatic model selection were configured, and 10 distinct historical cases subsequently ran through Copilot with scoped safe outputs. The **later live evidence supersedes the dry-run-only status for the project**, but not the provenance of the earlier dry run. See [live_runs.json](live_runs.json), [live_report.md](live_report.md) and [engineering_failures.md](engineering_failures.md). Never combine the dry-run 16/19 with live 3/10 into one accuracy figure.
+
+## Separate subsequent adversarial live tests (27 October 2026)
+
+Both original synthetic injection fixtures were subsequently tested in real
+Copilot issue-triggered workflows, independently of the historic accuracy
+sample. See [adversarial live report](adversarial_live_report.md). This
+does not retroactively make the earlier assistant dry runs blinded.
