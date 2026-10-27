@@ -53,9 +53,12 @@ astral-sh/ruff; it is **not** the Ruff project's issue tracker. Never change the
 
 ## Required procedure
 
-1. Read `AGENTS.md` and **open and follow** `.claude/skills/ruff-issue-triage/SKILL.md`.
-   Report a brief skill-use marker `SKILL_USED: ruff-issue-triage` in the final
-   run summary; do not claim use unless you actually opened it.
+1. Read `AGENTS.md`, then explicitly open and read the COMPLETE
+   `.claude/skills/ruff-issue-triage/SKILL.md` file using a file-read or
+   shell command BEFORE classifying the issue. The transcript must show the
+   actual file read, not just a self-reported marker. If it cannot be read,
+   emit `noop` and stop. Report `SKILL_USED: ruff-issue-triage` in the
+   final summary only after this read.
 2. Open `evals/runtime-binding.json` FIRST. A trusted GitHub Actions
    pre-agent step has already verified the event and embedded the full
    historical title and body in `verified_issue`. This SINGLE file contains
