@@ -32,6 +32,8 @@ class WorkflowSecurity(unittest.TestCase):
     def test_skill_is_referenced(self):
         s=SOURCE.read_text(encoding="utf-8")
         self.assertIn(".claude/skills/ruff-issue-triage/SKILL.md",s)
+        self.assertIn("transcript must show",s)
+        self.assertIn("actual file read",s)
         self.assertTrue((ROOT/".claude"/"skills"/"ruff-issue-triage"/"SKILL.md").exists())
     def test_no_expected_labels_in_runtime_tree(self):
         # Submission branch contains golden answers; runtime main should not.
