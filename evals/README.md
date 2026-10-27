@@ -52,3 +52,31 @@ the published actual and expected classes on the submission branch.
 To generate an independent blinded assistant prompt for an individual case
 (without its expected outcome), run:
 `python scripts/export_dryrun_prompt.py --case 28483 --output prompt.md`.
+
+## Actual Copilot results (23 October 2026)
+
+Ten distinct, precommitted historical Ruff cases were processed through the
+public sandbox with GitHub Copilot automatic model selection; two comments were
+actually posted by `github-actions[bot]`. The exact case IDs, source links,
+workflow run IDs, classes, run-version phases and AI Credit figures are in
+[`results/live_runs.json`](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/live_runs.json). Read
+[`results/live_report.md`](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/live_report.md) for the audit and
+[`results/engineering_failures.md`](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/engineering_failures.md) for
+unfiltered setup failures and retest rationale.
+
+To reproduce the counts without model access:
+`python scripts/verify_commitments.py`;
+`python scripts/evaluate_live.py`.
+Live exact-class agreement is 3/10; agreement on whether to comment at all is
+7/10. The posthoc deterministic comparator agrees on 7/10 of the same cases.
+These statistics do not establish a fair causal comparison because the
+workflow was revised between cases, the cases were not held out, and the
+comparator was designed with knowledge of this historical corpus.
+
+The two adversarial fixtures were originally **non-live** assistant dry runs.
+Both were subsequently tested in live Copilot issue-triggered workflows on
+27 October: each returned noop, posted no comment and explicitly read all 51
+skill lines. These are separate synthetic safety checks, not part of the ten
+historical accuracy cases. See [adversarial live report](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/adversarial_live_report.md)
+and [non-blind golden-label review](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/golden_label_review.md).
+The Copilot workflow is disabled after the evaluation.
