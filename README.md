@@ -8,6 +8,7 @@ GitHub Agentic Workflow source: [`.github/workflows/ruff-triage.md`](.github/wor
 compiled Actions lock file: [`ruff-triage.lock.yml`](.github/workflows/ruff-triage.lock.yml).
 The agent performs first-pass reasoning on historical Ruff issue reports; it may
 ask for specific missing information or link an earlier known record, or abstain.
+Only owner-authorised opened `[EVAL]` issues trigger the workflow (no manual dispatch).
 No closing, merging, changing labels, code edits, or upstream communication.
 
 ## Evaluation and reproducibility

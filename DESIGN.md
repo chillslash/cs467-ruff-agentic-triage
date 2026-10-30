@@ -17,7 +17,7 @@
   68 issues and rule-versus-bug-versus-design variety support a richer measurable evaluation. Rejected a
   rule-only labeler: mostly deterministic, and would overstate AI's benefit.
 ## Operating design and enforced boundaries
-- `.github/workflows/ruff-triage.md` triggers on owner-authorised **sandbox** `[EVAL]` issues and supports manual dispatch;
+- `.github/workflows/ruff-triage.md` triggers only on owner-authorised **sandbox** `[EVAL]` opened issues; manual dispatch is deliberately unavailable;
   `ruff-triage.lock.yml` is generated with `gh aw compile`.
 - `AGENTS.md` contains repository facts, commands, conventions and forbidden changes.
   `.claude/skills/ruff-issue-triage/SKILL.md` defines the four dispositions; a trusted pre-agent
@@ -74,7 +74,7 @@
   injections yielded noop and zero comments on 27 October.
 - **Human approval:** No agent edits/PRs. Human maintainer reviews comments before any real upstream
   action; upstream contributions forbidden. No CODEOWNERS needed for single-owner sandbox.
-- **Budgets:** 6 min, 9 turns, 12 AI Credits/run, 80/day; workflow_dispatch user cap 10/hour.
+- **Budgets:** 6 min, 9 turns, 12 AI Credits/run, 80/day; issue-event user cap 10/hour.
   Daily cap is **not** a strict issue-arrival cap.
 - **Audit:** GitHub Actions run IDs, model selector `copilot/auto`, posted comments and per-run AIC,
   fixed input/golden checksums and actual classes in `evals/results/live_runs.json`; provider model
@@ -93,8 +93,8 @@
    change and monthly; compare decisions, comments and recorded model ID; owner blocks rollout and restores last
    approved commit after mismatch.
 3. **300 issues in one week?** Ordinary public issues fail the role/title gate before inference;
-   for 300 permitted `[EVAL]` cases, trigger requests can exceed budget: per-run timeout/credit limits and 24h shared
-   cap eventually reject runs; no queue guarantee. Excess reports receive **manual** triage; do not promise 300
+   for 300 permitted `[EVAL]` cases, trigger requests can exceed budget: the 10/hour user rate gate and 24h shared
+   credit cap may reject runs; no queue guarantee. Excess reports receive **manual** triage; do not promise 300
    automated replies.
 4. **Malicious tool/MCP result?** Freeze local candidate metadata, no external MCP and narrow outputs. Injection
    cannot grant write permission; at worst it could contaminate one bounded comment. `adv-mcp-injection`
@@ -131,7 +131,7 @@
   fresh traces independently show the complete skill read, although earlier
   historical skill reads and universal instruction compliance remain unproven.
 - AI-assisted second-pass review retained gold, marking #28483 contestable.
-  Independent **human** adjudication is still outstanding.
+  A source-linked retrospective maintainer-evidence cross-check is in `evals/results/retrospective_validation.md`; independent **human** adjudication is still outstanding.
 - Frozen prior records are intentionally sparse; broad duplicate recall may be low. Manual model
   interpretation can still err, and budget credits may not equal money.
 ## AI-use statement

@@ -79,4 +79,7 @@ Both were subsequently tested in live Copilot issue-triggered workflows on
 skill lines. These are separate synthetic safety checks, not part of the ten
 historical accuracy cases. See [adversarial live report](results/adversarial_live_report.md)
 and [non-blind golden-label review](results/golden_label_review.md).
+A separate [retrospective validation](results/retrospective_validation.md) compares the frozen
+labels with later public Ruff maintainer responses; it does not change the score or
+constitute blinded independent human adjudication.
 The Copilot workflow is disabled after the evaluation.
