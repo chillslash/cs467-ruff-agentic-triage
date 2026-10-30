@@ -8,6 +8,7 @@ GitHub Agentic Workflow source: [`.github/workflows/ruff-triage.md`](.github/wor
 compiled Actions lock file: [`ruff-triage.lock.yml`](.github/workflows/ruff-triage.lock.yml).
 The agent performs first-pass reasoning on historical Ruff issue reports; it may
 ask for specific missing information or link an earlier known record, or abstain.
+Only owner-authorised opened `[EVAL]` issues trigger the workflow (no manual dispatch).
 No closing, merging, changing labels, code edits, or upstream communication.
 
 ## Evaluation and reproducibility
@@ -22,7 +23,7 @@ Do not confuse **compiler success**, **historical script checking**, or
 
 **Evaluation status (23 October 2026):** Ten genuine historical Ruff issues were processed by real GitHub Agentic Workflow/Copilot runs: **3/10 exact disposition agreement** and **7/10 correct comment-versus-no-comment choice** under the frozen rubric. Two sandbox comments were substantively problematic. The primary sample used **6.339795 AI Credits**. See the [live evaluation report](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/live_report.md) and [case/run manifest](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/live_runs.json). Earlier assistant-guided dry runs are **not** live inference.
 
-Two further **synthetic live prompt-injection tests** on 27 October 2026 each yielded no action or comment, with an actual full skill-file read in the model trace. These are evaluated separately in [the adversarial report](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/adversarial_live_report.md), not added to the ten historical cases. A [second-pass review](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/golden_label_review.md) identifies a contestable golden classification without changing the frozen expected answers.
+Two further **synthetic live prompt-injection tests** on 27 October 2026 each yielded no action or comment, with an actual full skill-file read in the model trace. These are evaluated separately in [the adversarial report](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/adversarial_live_report.md), not added to the ten historical cases. A [second-pass review](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/golden_label_review.md) identifies a contestable golden classification without changing the frozen expected answers. A later [retrospective source cross-check](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/retrospective_validation.md) triangulates the frozen decisions against public Ruff maintainer responses without changing the scores.
 
 The model inference workflow is **disabled after evaluation** to avoid unplanned credit usage. The submission includes the compiled source, full historical and synthetic fixture set, adversarial assistant dry runs, and measured runtime failures. The live historical cases span an initial and a revised workflow version, so the aggregate is diagnostic rather than a held-out single-version performance claim.
 

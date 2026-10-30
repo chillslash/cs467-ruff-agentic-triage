@@ -60,13 +60,6 @@ on:
   # - admin # Roles processed as role check in pre-activation job
   # - maintainer # Roles processed as role check in pre-activation job
   # - write # Roles processed as role check in pre-activation job
-  workflow_dispatch:
-    inputs:
-      aw_context:
-        default: ""
-        description: "Agent caller context (Reserved for Agentic Workflows)."
-        required: false
-        type: string
 
 # Jobs receive only their explicitly declared permissions.
 permissions: {}
@@ -90,7 +83,7 @@ jobs:
     name: activation
     needs: pre_activation
     if: >
-      needs.pre_activation.outputs.activated == 'true' && (github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]'))
+      needs.pre_activation.outputs.activated == 'true' && startsWith(github.event.issue.title, '[EVAL]')
     runs-on: ubuntu-slim
     # Permissions for the activation job (workflow permissions default to none).
     permissions:
@@ -1850,7 +1843,7 @@ jobs:
 
   pre_activation:
     name: pre_activation
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]')
+    if: startsWith(github.event.issue.title, '[EVAL]')
     runs-on: ubuntu-slim
     # Permissions for the pre_activation job (workflow permissions default to none).
     permissions:
@@ -1897,7 +1890,7 @@ jobs:
         env:
           GH_AW_RATE_LIMIT_MAX: "10"
           GH_AW_RATE_LIMIT_WINDOW: "60"
-          GH_AW_RATE_LIMIT_EVENTS: "workflow_dispatch"
+          GH_AW_RATE_LIMIT_EVENTS: "issues"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

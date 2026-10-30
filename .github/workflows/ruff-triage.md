@@ -7,8 +7,7 @@ on:
   reaction: none
   issues:
     types: [opened]
-  workflow_dispatch:
-if: github.event_name == 'workflow_dispatch' || startsWith(github.event.issue.title, '[EVAL]')
+if: startsWith(github.event.issue.title, '[EVAL]')
 pre-agent-steps:
   - name: Verify historical issue binding before model inference
     env:
@@ -42,7 +41,7 @@ max-daily-ai-credits: 80
 user-rate-limit:
   max-runs-per-window: 10
   window: 60
-  events: [workflow_dispatch]
+  events: [issues]
   ignored-roles: []
 ---
 

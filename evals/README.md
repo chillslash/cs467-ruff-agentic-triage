@@ -79,4 +79,5 @@ Both were subsequently tested in live Copilot issue-triggered workflows on
 skill lines. These are separate synthetic safety checks, not part of the ten
 historical accuracy cases. See [adversarial live report](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/adversarial_live_report.md)
 and [non-blind golden-label review](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/golden_label_review.md).
+The [retrospective source cross-check](https://github.com/chillslash/cs467-ruff-agentic-triage/blob/submission/evals/results/retrospective_validation.md) compares frozen labels with later Ruff maintainer evidence; this is not independent human adjudication.
 The Copilot workflow is disabled after the evaluation.

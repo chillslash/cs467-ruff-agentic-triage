@@ -41,5 +41,18 @@ class WorkflowSecurity(unittest.TestCase):
         if (ROOT/"evals"/"golden").exists():
             self.skipTest("submission branch legitimately contains gold labels")
         self.assertFalse((ROOT/"evals"/"golden").exists())
+    def test_compiled_and_source_triggers_agree(self):
+        """Only owner-authorised opened issues may activate the agent."""
+        source=SOURCE.read_text(encoding="utf-8")
+        compiled=LOCK.read_text(encoding="utf-8")
+        self.assertIn("  issues:\n    types: [opened]",source)
+        self.assertIn("  issues:\n    types:\n      - opened",compiled)
+        self.assertNotIn("workflow_dispatch:",source)
+        self.assertNotIn("workflow_dispatch:",compiled)
+        self.assertIn("if: startsWith(github.event.issue.title, '[EVAL]')",source)
+        self.assertIn("if: startsWith(github.event.issue.title, '[EVAL]')",compiled)
+        self.assertIn("GH_AW_RATE_LIMIT_EVENTS: \"issues\"",compiled)
+        self.assertIn("  events: [issues]",source)
+        self.assertNotIn("github.event_name == 'workflow_dispatch' || startsWith(",compiled)
 if __name__=="__main__": unittest.main()
 
